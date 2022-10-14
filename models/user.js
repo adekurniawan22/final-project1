@@ -1,8 +1,8 @@
 const db = require('../config/db');
 
-function register(req, res) {
+const register = (req, res) => {
     const { email, password } = req.body;
-    db.query('INSERT INTO users (email,password) VALUES ($1,$2)', [email, password], (error, result) => {
+    db.postgres.query('INSERT INTO users (email,password) VALUES ($1,$2)', [email, password], (error, result) => {
         if (error) {
             return res.status(500).json(
                 {
@@ -17,3 +17,6 @@ function register(req, res) {
         )
     })
 }
+
+
+module.exports = { register };
