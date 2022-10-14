@@ -1,12 +1,5 @@
 const { generateToken, verifyToken } = require('../helper/jwt');
-const Postgres = require('pg').Pool;
-const postgres = new Postgres({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'final-project1',
-    password: 'admin22',
-    port: 5432,
-})
+const { postgres } = require('../config/db');
 
 const register = (req, res) => {
     try {
@@ -52,12 +45,10 @@ const createReflections = async (req, res) => {
     try {
         const authenticatedUserId = res.dataUser.id;
         const { success, low_point, take_away, owner_id, created_date, modified_date } = req.body;
-        console.log(authenticatedUserId);
-        console.log(success, low_point, take_away, owner_id, created_date, modified_date)
         await postgres.query(`INSERT INTO reflections (success, low_point, take_away, owner_id, created_date, modified_date) VALUES ($1,$2,$3,$4,$5,$6)`, [success, low_point, take_away, owner_id, created_date, modified_date]);
 
         if (owner_id != authenticatedUserId) {
-            return res.status(500).json({ message: 'You only can create reflection with your id' });
+            return res.status(500).json({ message: 'You only can create reflection with your id login' });
         }
         return res.status(201).json({ message: 'Success create new reflections' });
     } catch (error) {
@@ -73,7 +64,6 @@ const getData = async (req, res) => {
 }
 
 module.exports = {
-    postgres,
     register,
     login,
     getData,
