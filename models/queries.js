@@ -1,4 +1,4 @@
-const { generateToken } = require('../helper/jwt');
+const { generateToken, verifyToken } = require('../helper/jwt');
 const Postgres = require('pg').Pool;
 const postgres = new Postgres({
     user: 'postgres',
@@ -23,9 +23,10 @@ const login = async (req, res) => {
     const query = await postgres.query(`SELECT * FROM users WHERE email = '${email}'`);
     dataLogin = query.rows[0];
 
+
     if (query.rowCount > 0) {
         if (password == query.rows[0].password) {
-            const token = generateToken({ id: +dataLogin.id });
+            const token = generateToken({ id: dataLogin.id });
             return res.status(200).json({ token: token });
         }
     } else {
@@ -34,7 +35,7 @@ const login = async (req, res) => {
 }
 
 const getData = async (req, res) => {
-    return res.json({
+    return res.status(200).json({
         message: 'Hallo'
     });
 }
