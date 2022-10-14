@@ -34,6 +34,17 @@ const login = async (req, res) => {
     }
 }
 
+const createReflections = async (req, res) => {
+    const authenticatedUserId = res.dataUser.id;
+    const { success, low_point, take_away, owner_id, created_date, modified_date } = req.body;
+    postgres.query(`INSERT INTO reflections (success, low_point, take_away, owner_id, created_date, modified_date) VALUES ($1,$2,$3,$4,$5,$6)`, [success, low_point, take_away, owner_id, created_date, modified_date], () => {
+        if (owner_id != authenticatedUserId) {
+            return res.status(500).json({ message: 'You only can create reflection with your id' })
+        }
+        return res.status(201).json({ message: 'Success create new reflections' })
+    })
+}
+
 const getData = async (req, res) => {
     return res.status(200).json({
         message: 'Hallo'
@@ -41,8 +52,8 @@ const getData = async (req, res) => {
 }
 
 module.exports = {
-    postgres,
     register,
     login,
     getData,
+    createReflections
 }    

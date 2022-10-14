@@ -12,6 +12,7 @@ async function authentiction(req, res, next) {
         if (!user) {
             return res.status(500).json({ message: 'You can acces this endpoint' });
         }
+        res.dataUser = user.rows[0];
         next();
     } catch (error) {
         const token = req.headers.Authorization;
