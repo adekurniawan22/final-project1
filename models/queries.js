@@ -25,21 +25,23 @@ const login = async (req, res) => {
 
     if (query.rowCount > 0) {
         if (password == query.rows[0].password) {
-            const token = generateToken({
-                email: dataLogin.email,
-                password: dataLogin.password
-            })
-            return res.status(200).json({ token: token })
+            const token = generateToken({ id: +dataLogin.id });
+            return res.status(200).json({ token: token });
         }
     } else {
         return res.status(500).json({ message: 'User Not Found' })
     }
+}
 
-
+const getData = async (req, res) => {
+    return res.json({
+        message: 'Hallo'
+    });
 }
 
 module.exports = {
     postgres,
     register,
-    login
+    login,
+    getData,
 }    
