@@ -13,7 +13,7 @@ async function authentication(req, res, next) {
         res.dataUser = user.rows[0];
         next();
     } catch (error) {
-        return res.status(500).json({ message: 'hahaha' });
+        return res.status(500).json(error);
     }
 }
 

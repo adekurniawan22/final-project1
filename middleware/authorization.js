@@ -11,7 +11,6 @@ const authorization = async (req, res, next) => {
         }
 
         if (user.rows[0].id == authenticatedUserId) {
-            res.userId = user.rows[0].id
             return next();
         } else {
             return res.status(403).json({
