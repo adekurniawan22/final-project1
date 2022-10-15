@@ -2,9 +2,8 @@ const { postgres } = require('../config/db');
 
 const authorization = async (req, res, next) => {
     try {
-        const id = req.params.id;
         const authenticatedUserId = parseInt(res.dataUser.id);
-        const user = await postgres.query(`SELECT * FROM users WHERE id=${+id}`);
+        const user = await postgres.query(`SELECT * FROM users WHERE id=${authenticatedUserId}`);
         if (!user.rows) {
             res.status(500).json({
                 message: "Data Not Found"
@@ -12,6 +11,7 @@ const authorization = async (req, res, next) => {
         }
 
         if (user.rows[0].id == authenticatedUserId) {
+            res.userId = user.rows[0].id
             return next();
         } else {
             return res.status(403).json({
