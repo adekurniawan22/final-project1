@@ -5,30 +5,7 @@
 -- Dumped from database version 11.17
 -- Dumped by pg_dump version 11.17
 
--- Started on 2022-10-15 11:29:47
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- TOC entry 2826 (class 1262 OID 16532)
--- Name: final-project1; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE "final-project1" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'English_Indonesia.1252' LC_CTYPE = 'English_Indonesia.1252';
-
-
-ALTER DATABASE "final-project1" OWNER TO postgres;
-
-\connect -reuse-previous=on "dbname='final-project1'"
+-- Started on 2022-10-15 04:34:59
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -121,24 +98,25 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.users (id, email, password) OVERRIDING SYSTEM VALUE VALUES (1, 'user', 'user');
 
 
 --
--- TOC entry 2827 (class 0 OID 0)
+-- TOC entry 2826 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: reflections_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.reflections_id_seq', 28, true);
+SELECT pg_catalog.setval('public.reflections_id_seq', 16, true);
 
 
 --
--- TOC entry 2828 (class 0 OID 0)
+-- TOC entry 2827 (class 0 OID 0)
 -- Dependencies: 198
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 15, true);
+SELECT pg_catalog.setval('public.users_id_seq', 13, true);
 
 
 --
@@ -159,7 +137,7 @@ ALTER TABLE ONLY public.reflections
     ADD CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
--- Completed on 2022-10-15 11:29:48
+-- Completed on 2022-10-15 04:35:00
 
 --
 -- PostgreSQL database dump complete
