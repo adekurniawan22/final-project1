@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
-const SECRET = "Rahasia";
+const SECRET = "Rah4si4";
 
 function generateToken(payload) {
-    const token = jwt.sign(payload, SECRET);
+    const token = jwt.sign(payload, SECRET, { expiresIn: '24h' });
     return token;
 }
 
